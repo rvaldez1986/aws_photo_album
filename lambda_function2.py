@@ -5,8 +5,6 @@ import urllib3
 
 
 def lambda_handler(event, context):
-
-    '''
     
     print('Event')
     print(event)
@@ -16,14 +14,10 @@ def lambda_handler(event, context):
     q = event['queryStringParameters']['q']
     print('query:')
     print(q)
-
-    '''
     
     client = boto3.client('lexv2-runtime', region_name='us-east-1')
     
      #parse it with lex
-
-    '''
 
     response = client.recognize_text(
         botId='Y5RTYYRDLS',
@@ -54,8 +48,6 @@ def lambda_handler(event, context):
     labels = list(set(res))
     print('extracted labels:')
     print(labels)
-
-    '''
     
     http = urllib3.PoolManager()    
     userAndPass = b64encode(b"admin:Vamosroberto100%").decode("ascii")
@@ -63,7 +55,7 @@ def lambda_handler(event, context):
     
     #retrieve names with elasticSearch
     
-    '''
+    
     url = 'https://search-photos-m462xed766ciaehgsrrwsywkjq.us-east-2.es.amazonaws.com/photos/_search?q='
     resp = []
     if labels:
@@ -86,11 +78,8 @@ def lambda_handler(event, context):
                     
     print('extracted keys:')
     print(output)
-
-    '''
+    
     ret_body = {}
-
-    '''
     for i,e in enumerate(output):
         ret_body['k'+str(i)] = e
     
@@ -98,8 +87,7 @@ def lambda_handler(event, context):
     #send them back as body
     
     
-    '''
-    
+    # TODO implement
     return {
         'statusCode': 200,
         'headers': {
@@ -109,5 +97,3 @@ def lambda_handler(event, context):
         },
         'body': json.dumps(ret_body)
     }
-
-
