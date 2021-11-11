@@ -34,8 +34,9 @@ def lambda_handler(event, context):
     mlist = json.loads(response['Metadata']['customlabels'])
     mlist = [e.upper() for e in mlist]
     
-    
+    '''
     client=boto3.client('rekognition')
+    '''
     
     new_response = client.detect_labels(Image={'S3Object': {'Bucket': 'hw2b2', 'Name': name}}, MinConfidence=90)
     
