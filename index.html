@@ -1,0 +1,123 @@
+<!DOCTYPE html> 
+<html> 
+  <head> 
+    <title> Photo Album </title> 
+  </head> 
+  <body id = "body">
+    <!-- HTML5 Input Form Elements -->    
+    <br><br><input id="fileupload" type="file" name="fileupload" accept="image/*"><br><br> 
+    <label for="cust_labels">Enter photo labels:</label>
+    <input type="text" id="c_labels" name="labels" placeholder="dog cat car play ..."><br><br>
+    <button id="upload-button" onclick="uploadFile()"> Upload </button><br><br><br>
+    <input type="text" id="query" name="query" placeholder="pictures of ..."><br><br>
+    <button id="get-button" onclick="input_search()"> search </button><br>
+    <button1 type="button" onclick="speech_search()">
+    <img src="mmc.jpg" width="90" height="90" alt="submit" />
+    </button1> &nbsp; <span id="action"></span>
+    
+  <!-- Ajax JavaScript File Upload Logic -->
+    <script>
+
+    function disp_images(result){
+      const obj = JSON.parse(result);
+      for (let k of Object.keys(obj)) {
+        var picture = obj[k];
+        var img = document.createElement('img');
+        img.src = 'https://hw2b2.s3.us-east-2.amazonaws.com/' + picture;
+        document.getElementById('body').appendChild(img);        
+      }
+    }
+    
+
+    async function os_search(query) {
+
+
+        var myHeaders = new Headers();
+        var url = new URL('https://res3s4hixb.execute-api.us-east-2.amazonaws.com/dev/search');
+        var params = {q:query}
+        url.search = new URLSearchParams(params).toString();
+
+        myHeaders.append("x-api-key", "pCXbTTXYpx7AVzEYFq0Mo9hXH33WzZ6g1RStEcn7");
+
+        var requestOptions = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow'
+        };  
+
+
+        let response = await fetch(url, requestOptions)
+          .then(response => response.text())
+          //.then(result => console.log(result))
+          .then(result => disp_images(result))
+          .catch(error => console.log('error', error));       
+                
+    };
+
+    async function input_search(){
+      var query = document.getElementById("query").value;
+      os_search(query);
+    }
+
+    async function uploadFile() {   
+
+    	var myHeaders = new Headers();
+		  var file = fileupload.files[0];
+		  let url = 'https://res3s4hixb.execute-api.us-east-2.amazonaws.com/dev/upload/hw2b2/' + file.name;
+		  var labelArray = document.getElementById("c_labels").value.split(/[ ,]+/);
+
+      let termination = "image/" + file.name.split('.').pop();
+		  myHeaders.append("Content-Type", termination);
+		  myHeaders.append("x-amz-meta-customLabels", JSON.stringify(labelArray));
+      myHeaders.append("x-api-key", "pCXbTTXYpx7AVzEYFq0Mo9hXH33WzZ6g1RStEcn7");
+
+		  var requestOptions = {
+  			 method: 'PUT',
+  			 headers: myHeaders,
+  			 body: file,
+  			 redirect: 'follow'
+		  };
+
+		  fetch(url, requestOptions);  
+  
+      alert('The file has been uploaded successfully.');
+    }
+
+
+    function speech_search() {
+        // get output div reference
+        var output = document.getElementById("output");
+        // get action element reference
+        var action = document.getElementById("action");
+        // new speech recognition object
+        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+        var recognition = new SpeechRecognition();
+    
+        // This runs when the speech recognition service starts
+        recognition.onstart = function() {
+            action.innerHTML = "<small>listening, please speak...</small>";
+        };
+        
+        recognition.onspeechend = function() {
+            action.innerHTML = "<small>stopped listening, hope you are done...</small>";
+            recognition.stop();
+        }
+      
+        // This runs when the speech recognition service returns result
+        recognition.onresult = function(event) {
+            var transcript = event.results[0][0].transcript;
+            var confidence = event.results[0][0].confidence;
+            console.log("transcript is:");
+            console.log(transcript);
+            os_search(transcript);
+
+        };
+      
+        // start recognition
+        recognition.start();
+    }
+  
+    </script>
+
+  </body> 
+</html>
