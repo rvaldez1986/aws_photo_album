@@ -2,7 +2,7 @@ import pandas as pd
 import json
 
 def lambda_handler(event, context):
-    print('Hello from Lambda')
+    print('Hello from Lambda 2')
     
     return {
         'statusCode': 200,
