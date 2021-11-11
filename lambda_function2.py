@@ -5,6 +5,8 @@ import urllib3
 
 
 def lambda_handler(event, context):
+
+    '''
     
     print('Event')
     print(event)
@@ -14,6 +16,8 @@ def lambda_handler(event, context):
     q = event['queryStringParameters']['q']
     print('query:')
     print(q)
+
+    '''
     
     client = boto3.client('lexv2-runtime', region_name='us-east-1')
     
