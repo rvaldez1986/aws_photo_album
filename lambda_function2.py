@@ -19,7 +19,7 @@ def lambda_handler(event, context):
     
      #parse it with lex
 
-     '''
+    '''
 
     response = client.recognize_text(
         botId='Y5RTYYRDLS',
