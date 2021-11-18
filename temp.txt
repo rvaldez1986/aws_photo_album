@@ -1,0 +1,9 @@
+https://www.youtube.com/watch?v=dir1HtgbwzY&ab_channel=WolfgangUnger-Cloud%26AWS
+https://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-s3.html
+https://bluegrid.io/using-rest-api-to-upload-files-to-the-s3-bucket/
+https://aws.amazon.com/premiumsupport/knowledge-center/api-gateway-upload-image-s3/
+
+
+frontend
+
+https://www.youtube.com/watch?v=mfAT38B_uhw&ab_channel=SimplyExplained
