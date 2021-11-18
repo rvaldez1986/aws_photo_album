@@ -20,7 +20,7 @@ def lambda_handler(event, context):
     #name = 'sad_dog.png'
     
     s3 = boto3.resource('s3')
-    bucket = s3.Bucket(u'hw2b2') 
+    bucket = s3.Bucket(u'hw2b2cf') 
     obj = bucket.Object(key=name)
     print('object')
     print(obj)
@@ -34,7 +34,7 @@ def lambda_handler(event, context):
     
     client=boto3.client('rekognition')
     
-    new_response = client.detect_labels(Image={'S3Object': {'Bucket': 'hw2b2', 'Name': name}}, MinConfidence=90)
+    new_response = client.detect_labels(Image={'S3Object': {'Bucket': 'hw2b2cf', 'Name': name}}, MinConfidence=90)
     
    
     
@@ -50,7 +50,7 @@ def lambda_handler(event, context):
     
     encoded_body = json.dumps({
         "objectKey": name,
-        "bucket": "hw2b2",
+        "bucket": "hw2b2cf",
         "createdTimestamp": str(datetime.datetime.now()),
         "labels": tlist,
     })

@@ -92,7 +92,7 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'headers': {
             'Access-Control-Allow-Headers': 'Content-Type',
-            'Access-Control-Allow-Origin': 'http://hw2b101.s3-website.us-east-2.amazonaws.com',
+            'Access-Control-Allow-Origin': 'http://hw2b101cf.s3-website.us-east-2.amazonaws.com',
             'Access-Control-Allow-Methods': 'OPTIONS, GET'
         },
         'body': json.dumps(ret_body)
