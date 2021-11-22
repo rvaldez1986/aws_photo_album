@@ -7,6 +7,7 @@ import datetime
 
 def lambda_handler(event, context):
     # TODO implement
+    #test for pipeline
     
     print('event')
     print(event)
