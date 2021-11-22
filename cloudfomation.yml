@@ -1,4 +1,6 @@
-AWSTemplateFormatVersion : 2010-09-09
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS API Gateway with a Lambda Integration
+
 Parameters:
   BucketName: 
     Type: String
@@ -98,7 +100,7 @@ Resources:
           import json
           def lambda_handler(event, context):
               print("Event: %s" % json.dumps(event))
-      Handler: index.lambda_handler
+      Handler: lambda_function.lambda_handler
       Role: !GetAtt ProcessingLambdaExecutionRole.Arn
       Runtime: python3.9
       MemorySize: 512

@@ -74,7 +74,7 @@ Resources:
   ApiGatewayMethod:
     Type: AWS::ApiGateway::Method
     Properties:
-      ApiKeyRequired: false
+      ApiKeyRequired: true
       AuthorizationType: NONE
       HttpMethod: GET
       Integration:
@@ -105,7 +105,7 @@ Resources:
   ApiGatewayMethod2:
     Type: AWS::ApiGateway::Method
     Properties:
-      ApiKeyRequired: false
+      ApiKeyRequired: true
       AuthorizationType: NONE
       HttpMethod: PUT        
       Integration:
@@ -268,12 +268,42 @@ Resources:
             }
             return response
       Description: AWS Lambda function
-      Handler: lambda.lambda_handler
+      Handler: lambda_function2.lambda_handler
       MemorySize: 256
       Role: !GetAtt LambdaIamRole.Arn
       Runtime: python3.9
       Timeout: 60
       FunctionName: hw2_LF2cf
+
+  ApiKey: 
+    Type: AWS::ApiGateway::ApiKey
+    Properties: 
+      Name: customercf1
+      Description: "CloudFormation API Key V1"
+      Enabled: true
+      GenerateDistinctId: false
+
+  ApiUsagePlan:
+    Type: "AWS::ApiGateway::UsagePlan"
+    Properties:
+      ApiStages: 
+      - ApiId: !Ref ApiGatewayRestApi
+        Stage: !Ref ApiGatewayStage    
+      Description: usage plan on cf
+      Quota:
+        Limit: 2000
+        Period: MONTH
+      Throttle:
+        BurstLimit: 10
+        RateLimit: 10
+      UsagePlanName: premiumcf-plan
+
+  ApiUsagePlanKey:
+    Type: "AWS::ApiGateway::UsagePlanKey"
+    Properties:
+      KeyId: !Ref ApiKey
+      KeyType: API_KEY
+      UsagePlanId: !Ref ApiUsagePlan
 
   LambdaIamRole:
     Type: AWS::IAM::Role
