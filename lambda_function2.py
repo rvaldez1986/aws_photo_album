@@ -85,6 +85,7 @@ def lambda_handler(event, context):
     
     
     #send them back as body
+    print(ret_body)
     
     
     # TODO implement

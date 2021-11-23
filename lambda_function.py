@@ -35,7 +35,7 @@ def lambda_handler(event, context):
     
     client=boto3.client('rekognition')
     
-    new_response = client.detect_labels(Image={'S3Object': {'Bucket': 'hw2b2cf', 'Name': name}}, MinConfidence=90)
+    new_response = client.detect_labels(Image={'S3Object': {'Bucket': 'hw2b2cf', 'Name': name}}, MinConfidence=98)
     
    
     

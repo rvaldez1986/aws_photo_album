@@ -1,7 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-
 Description: AWS API Gateway with a Lambda Integration
-
 
 Resources:
   Bucket:
@@ -216,7 +214,7 @@ Resources:
 
   ApiGatewayDeployment:
     Type: AWS::ApiGateway::Deployment
-    DependsOn: OptionsMethod2
+    DependsOn: [ApiGatewayMethod, ApiGatewayMethod2, OptionsMethod, OptionsMethod2, ApiGatewayRestApi]
     Properties:
       Description: Lambda API Deployment
       RestApiId: !Ref ApiGatewayRestApi
